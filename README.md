@@ -14,6 +14,10 @@ Features:
 - Automatic location detection via IPInfo.io API
 - Geocoder for location name resolution via Nominatim API
 
+Demo:
+
+[https://www.youtube.com/watch?v=vR5DYhlheCI](https://www.youtube.com/watch?v=vR5DYhlheCI)
+
 Hardware:
 - Raspberry Pi Zero WH
 - Nextion NX8048T050 display
