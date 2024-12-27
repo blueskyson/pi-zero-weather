@@ -89,25 +89,6 @@ Hardware:
     $ python main.py
     ```
 
-
-Copy the directory `pi-zero` to the your home directory of Pi Zero. Login to your Pi through SSH or HDMI monitor, and run the following commands:
-
-```bash
-sudo apt install libgirepository1.0-dev gir1.2-nm-1.0
-mkdir -p /etc/NetworkManager/conf.d
-# create any-user.conf within conf.d and include within:
-[main]
-auth-polkit=false
-# restart NM
-systemctl restart NetworkManager
-
-cd pi-zero
-python -m venv ./weather-venv
-source ./weather-venv/bin/activate
-pip install -r requirements.txt
-```
-
 ## Image sources
-
 - background: Goč, Serbia by Filip Zrnzević on Unsplash
 - weather icons: https://openweathermap.org/weather-conditions
