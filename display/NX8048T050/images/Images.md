@@ -1,3 +1,4 @@
 # Image sources
 
-- Dark background: Milky way over lassen national park by Thomas Ciszewski
+- background: Goč, Serbia by Filip Zrnzević on Unsplash
+- weather icons: https://openweathermap.org/weather-conditions

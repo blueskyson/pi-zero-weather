@@ -5,17 +5,23 @@ import serial
 
 @dataclass
 class Command:
-    event: int
-    page: int
-    component: int
+    event: int = -1
+    page: int = -1
+    component: int = -1
+    string_data: str = None
 
     def __str__(self):
         return f"Command(event=\\x{self.event:02x}, page=\\x{self.page:02x}, component=\\x{self.component:02x})"
 
 
 class Nextion:
+    # Picture ID
+    PICTURE_BACKGROUND = 0
+
     # Event Codes
     EVENT_TOUCH = 0x65
+    CURRENT_PAGE_NUMBER = 0x66
+    STRING_DATA = 0x70
 
     # Main Page Components
     PAGE_MAIN = 0x00
@@ -25,10 +31,10 @@ class Nextion:
     # Menu Page Components
     PAGE_MENU = 0x01
     T_ID1 = 0x03
-    T_ID1 = 0x05
-    T_ID1 = 0x07
-    T_ID1 = 0x09
-    T_ID1 = 0x0b
+    T_ID2 = 0x05
+    T_ID3 = 0x07
+    T_ID4 = 0x09
+    T_ID5 = 0x0b
     T_SSID1 = 0x02
     T_SSID2 = 0x04
     T_SSID3 = 0x06
@@ -37,9 +43,10 @@ class Nextion:
     B_LEFT = 0x0c
     B_RIGHT = 0x0d
     B_CONNECT = 0x0f
-    B_UNIT_TEMP = 0x16
-    B_UNIT_LENGTH = 0x17
+    B_UPDATE_LOCATION = 0x13
+    B_UNIT_TEMP = 0x11
     B_BACK = 0x01
+
 
     def __init__(self, port: str = '/dev/ttyUSB0', baudrate: int = 9600):
         """
@@ -73,11 +80,27 @@ class Nextion:
 
         commands = []
         for bytes in rawCommands[:-1]:
-            if bytes[0] == self.EVENT_TOUCH:
-                c = Command(event=bytes[0], page=bytes[1], component=bytes[2])
-                print("<=", c)
-                commands.append(c)
+            match bytes[0]:
+                case self.EVENT_TOUCH:
+                    c = Command(event=bytes[0], page=bytes[1], component=bytes[2])
+                    print("<=", c)
+                    commands.append(c)
+                case self.CURRENT_PAGE_NUMBER:
+                    c = Command(event=bytes[0], page=bytes[1])
+                    print("<=", c)
+                    commands.append(c)
+                case self.STRING_DATA:
+                    c = Command(event=bytes[0], string_data=bytes[1:].decode("iso8859-1"))
+                    print("<= string data")
+                    commands.append(c)
+
         return commands
+
+
+    def send(self, instruction_str, should_log = True):
+        self.ser.write(instruction_str.encode('iso-8859-1'))
+        if should_log:
+            print("=>", instruction_str.replace("\xFF\xFF\xFF", ", "))
 
 
     def close(self):
