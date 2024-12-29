@@ -39,7 +39,7 @@ class NetworkManager:
         for device in self.client.get_devices():
             if device.get_device_type() == NM.DeviceType.WIFI:
                 self.device = device
-                break;
+                break
         
         if not self.device:
             raise RuntimeError("No WIFI device found.")
