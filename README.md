@@ -1,6 +1,6 @@
 # Pi Zero Weather
 
-A weather panel project using Raspberry Pi Zero and Nextion touch screen.
+A weather panel project using Raspberry Pi Zero and Nextion touchscreen.
 
 <div style="display: flex; align-items: center;">
     <img src="./images/main.jpg" height="500">
@@ -24,14 +24,18 @@ Hardware:
 - USB to TTL adapter (IZOKEE CP2102 in this project)
 - SD card, power supply, HDMI adapter for Pi, etc.
 
+Related project:
+
+[ESP32 Weather](https://github.com/blueskyson/esp32-weather)
+
 ## Setup Steps
 
 ### Setup Nextion Display
 1. Install Nextion Editor and open `./display/NX8048T050/project.HMI` in the editor. You can use "Debug" button to simulate the display and check if any error occurs.
 2. Install the driver for the USB to TTL adapter. Connect the display to your computer using a USB to TTL adapter. Note TX of the display should be connected to RX of the adapter and vice versa.
 3. Push the "Upload" button in the Nextion Editor to upload the project to the display. If the display is not detected, check the connection and the driver installation.
-4. Connect the display to the Raspberry Pi Zero W. TX of the display shoud be connexted to uart0 RX (GPIO16) of the Pi Zero W and vice versa.
-5. <img src="./images/wire.jpg" height="400">
+4. Connect the display to the Raspberry Pi Zero W. TX of the display shoud be connexted to uart0 RX (GPIO16) of the Pi Zero W and vice versa.  
+   <img src="./images/wire.jpg" height="400">
 ### Setup Raspberry Pi Zero W
 1. Install **Raspberry Pi OS Lite** on SD card using Raspberry Pi Imager. Set up OS customization settings like ssh, wifi as needed.
 2. Open bootfs directory of SD card. Write these configs in [all] section of `/boot/config.txt` to enable uart pins and allow HDMI output:
